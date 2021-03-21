@@ -6,6 +6,10 @@ plugins {
 android {
     compileSdkVersion 30
 
+    dataBinding {
+        enabled = true
+    }
+
     defaultConfig {
         applicationId "com.slideproject.sidekotlin"
         minSdkVersion 23
@@ -32,6 +36,12 @@ android {
 }
 
 dependencies {
+
+    //recyclerView
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+
+    //cardView
+    implementation 'androidx.cardview:cardview:1.0.0'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.2.0'

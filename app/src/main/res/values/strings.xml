@@ -1,3 +1,39 @@
 <resources>
     <string name="app_name">sidekotlin</string>
+
+    <string-array name = "product">
+        <item>中信金</item>
+        <item>華南金</item>
+        <item>第一金</item>
+        <item>玉山金</item>
+        <item>兆豐金</item>
+        <item>台新金</item>
+    </string-array>
+
+    <string-array name="deal">
+        <item>21.30</item>
+        <item>18.30</item>
+        <item>21.50</item>
+        <item>26.05</item>
+        <item>31.05</item>
+        <item>13.10</item>
+    </string-array>
+
+    <string-array name="quoteChange">
+        <item>0.25</item>
+        <item>0.05</item>
+        <item>0.45</item>
+        <item>0.05</item>
+        <item>0.35</item>
+        <item>0.10</item>
+    </string-array>
+
+    <string-array name="increase">
+        <item>1.16</item>
+        <item>0.27</item>
+        <item>2.05</item>
+        <item>0.19</item>
+        <item>1.11</item>
+        <item>0.76</item>
+    </string-array>
 </resources>
