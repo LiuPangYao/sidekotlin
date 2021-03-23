@@ -6,40 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".StartupActivity">
 
-    <TextView
-        android:id="@+id/tv_name"
+    <EditText
+        android:id="@+id/et_company"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="name"
-        android:textColor="@color/black"
-        android:textStyle="bold"
+        android:ems="10"
+        android:hint="姓名"
+        android:paddingTop="200dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_company"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="company"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/tv_name"
-        app:layout_constraintStart_toStartOf="@+id/tv_name"
-        app:layout_constraintTop_toBottomOf="@+id/tv_name" />
-
-    <TextView
-        android:id="@+id/tv_age"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="age"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/tv_company"
-        app:layout_constraintStart_toStartOf="@+id/tv_company"
-        app:layout_constraintTop_toBottomOf="@+id/tv_company" />
 
     <EditText
         android:id="@+id/et_name"
@@ -65,24 +41,12 @@
         app:layout_constraintTop_toBottomOf="@+id/et_name"
         tools:layout_editor_absoluteY="317dp" />
 
-    <EditText
-        android:id="@+id/et_company"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="姓名"
-        app:layout_constraintEnd_toEndOf="@+id/tv_age"
-        app:layout_constraintStart_toStartOf="@+id/tv_age"
-        app:layout_constraintTop_toBottomOf="@+id/tv_age"
-        tools:layout_editor_absoluteY="178dp" />
-
     <Button
         android:id="@+id/btn_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="Save user"
+        android:text="Save user data"
         android:textColor="@android:color/white"
         android:textSize="16sp"
         android:textStyle="bold"

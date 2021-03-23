@@ -6,8 +6,8 @@ plugins {
 android {
     compileSdkVersion 30
 
-    dataBinding {
-        enabled = false
+    buildFeatures {
+        viewBinding true
     }
 
     defaultConfig {

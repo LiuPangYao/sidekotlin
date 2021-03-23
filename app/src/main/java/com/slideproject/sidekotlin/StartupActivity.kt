@@ -4,88 +4,87 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.observe
 import com.slideproject.sidekotlin.data.UserManager
 import com.slideproject.sidekotlin.data.dataStore
+import com.slideproject.sidekotlin.databinding.StartupActivityBinding
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class StartupActivity : AppCompatActivity() {
 
     lateinit var userManager: UserManager
-    var age = 0
-    var name = ""
-    var company = ""
 
-    lateinit var tv_age : TextView
-    lateinit var tv_company : TextView
-    lateinit var tv_name : TextView
+    var userAge = 0
+    var userName = ""
+    var userCompany = ""
 
-    lateinit var et_age : EditText
+    /*lateinit var et_age : EditText
     lateinit var et_name : EditText
     lateinit var et_company : EditText
+    lateinit var btn_save : Button*/
 
-    lateinit var btn_save : Button
+    private lateinit var binding: StartupActivityBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_startup)
+        binding = StartupActivityBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        tv_age = findViewById(R.id.tv_age)
-        tv_company = findViewById(R.id.tv_company)
-        tv_name = findViewById(R.id.tv_name)
-
-        et_age = findViewById(R.id.et_age)
+        /*et_age = findViewById(R.id.et_age)
         et_name = findViewById(R.id.et_name)
         et_company = findViewById(R.id.et_company)
 
-        btn_save = findViewById(R.id.btn_save)
+        btn_save = findViewById(R.id.btn_save)*/
 
         //Get reference to our userManager class
         userManager = UserManager(dataStore)
+
         buttonSave()
         observeData()
     }
 
     private fun observeData() {
-
         //Updates age
         userManager.userAgeFlow.asLiveData().observe(this, {
             if (it != null) {
-                age = it
-                tv_age.text = it.toString()
+                userAge = it
+                //binding.tvAge.text = it.toString()
+                binding.etAge.setText(it.toString())
             }
         })
 
         //Updates name
         userManager.userNameFlow.asLiveData().observe(this, {
             if (it != null) {
-                name = it
-                tv_name.text = it
+                userName = it
+                //binding.tvName.text = it
+                binding.etName.setText(it)
             }
         })
 
         //Updates company
         userManager.userCompanyFlow.asLiveData().observe(this, {
             if (it != null) {
-                company = it
-                tv_company.text = it
+                userCompany = it
+                //binding.tvCompany.text = it
+                binding.etCompany.setText(it)
             }
         })
     }
 
     private fun buttonSave() {
         //Gets the user input and saves it
-        btn_save.setOnClickListener {
-            name = et_name.text.toString()
-            company = et_company.text.toString()
-            age = et_age.text.toString().toInt()
+        binding.btnSave.setOnClickListener {
+            userName = binding.etName.text.toString()
+            userCompany = binding.etCompany.text.toString()
+            userAge = binding.etAge.text.toString().toInt()
 
             //Stores the values
             GlobalScope.launch {
-                userManager.storeUser(age, name, company)
+                userManager.storeUser(userAge, userName, userCompany)
             }
         }
     }
