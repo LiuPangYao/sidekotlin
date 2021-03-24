@@ -2,8 +2,6 @@ package com.slideproject.sidekotlin
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.observe
 import com.slideproject.sidekotlin.data.UserManager
@@ -51,7 +49,6 @@ class StartupActivity : AppCompatActivity() {
         userManager.userAgeFlow.asLiveData().observe(this, {
             if (it != null) {
                 userAge = it
-                //binding.tvAge.text = it.toString()
                 binding.etAge.setText(it.toString())
             }
         })
@@ -60,7 +57,6 @@ class StartupActivity : AppCompatActivity() {
         userManager.userNameFlow.asLiveData().observe(this, {
             if (it != null) {
                 userName = it
-                //binding.tvName.text = it
                 binding.etName.setText(it)
             }
         })
@@ -69,7 +65,6 @@ class StartupActivity : AppCompatActivity() {
         userManager.userCompanyFlow.asLiveData().observe(this, {
             if (it != null) {
                 userCompany = it
-                //binding.tvCompany.text = it
                 binding.etCompany.setText(it)
             }
         })
