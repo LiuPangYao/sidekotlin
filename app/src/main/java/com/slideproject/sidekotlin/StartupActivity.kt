@@ -1,5 +1,6 @@
 package com.slideproject.sidekotlin
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.asLiveData
@@ -9,21 +10,18 @@ import com.slideproject.sidekotlin.data.dataStore
 import com.slideproject.sidekotlin.databinding.StartupActivityBinding
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
+
+const val EXTRA_MESSAGE = "com.sideproject.sidekotlin.MESSAGE"
 
 class StartupActivity : AppCompatActivity() {
 
+    private lateinit var binding: StartupActivityBinding
     lateinit var userManager: UserManager
-
     var userAge = 0
     var userName = ""
     var userCompany = ""
-
-    /*lateinit var et_age : EditText
-    lateinit var et_name : EditText
-    lateinit var et_company : EditText
-    lateinit var btn_save : Button*/
-
-    private lateinit var binding: StartupActivityBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,17 +29,9 @@ class StartupActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        /*et_age = findViewById(R.id.et_age)
-        et_name = findViewById(R.id.et_name)
-        et_company = findViewById(R.id.et_company)
-
-        btn_save = findViewById(R.id.btn_save)*/
-
-        //Get reference to our userManager class
         userManager = UserManager(dataStore)
-
-        buttonSave()
         observeData()
+        buttonSave()
     }
 
     private fun observeData() {
@@ -81,6 +71,13 @@ class StartupActivity : AppCompatActivity() {
             GlobalScope.launch {
                 userManager.storeUser(userAge, userName, userCompany)
             }
+
+            val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+            val currentDate = sdf.format(Date())
+            val intent = Intent(this, RecyclerViewActivity::class.java).apply {
+                putExtra(EXTRA_MESSAGE, currentDate)
+            }
+            startActivity(intent)
         }
     }
 }
