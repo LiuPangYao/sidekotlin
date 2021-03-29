@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+option java_package = "com.slideproject.sidekotlin";
+option java_multiple_files = true;
+
+message Login {
+  string loginTime = 1;
+  string UserName = 2;
+  int32 stockListSize = 3;
+}

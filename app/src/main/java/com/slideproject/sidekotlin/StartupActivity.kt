@@ -13,7 +13,8 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
-const val EXTRA_MESSAGE = "com.sideproject.sidekotlin.MESSAGE"
+const val EXTRA_MESSAGE_DATE = "com.sideproject.sidekotlin.MESSAGE.DATE"
+const val EXTRA_MESSAGE_NAME = "com.sideproject.sidekotlin.MESSAGE,NAME"
 
 class StartupActivity : AppCompatActivity() {
 
@@ -75,7 +76,8 @@ class StartupActivity : AppCompatActivity() {
             val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
             val currentDate = sdf.format(Date())
             val intent = Intent(this, RecyclerViewActivity::class.java).apply {
-                putExtra(EXTRA_MESSAGE, currentDate)
+                putExtra(EXTRA_MESSAGE_DATE, currentDate)
+                putExtra(EXTRA_MESSAGE_NAME, userName)
             }
             startActivity(intent)
         }

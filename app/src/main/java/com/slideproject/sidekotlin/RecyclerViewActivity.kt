@@ -1,22 +1,28 @@
 package com.slideproject.sidekotlin
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.datastore.core.DataStore
+import androidx.datastore.dataStore
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.slideproject.sidekotlin.databinding.ActivityRecyclerViewBinding
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.collect
 import kotlin.collections.ArrayList
 
 class RecyclerViewActivity : AppCompatActivity() {
 
     private var TAG = "RecyclerViewActivity"
     private lateinit var binding: ActivityRecyclerViewBinding
-
     var layoutManager: RecyclerView.LayoutManager? = null
     private lateinit var stockAdapterＣontainer: StockAdapter
-
     val mStockList: ArrayList<Stock> = ArrayList<Stock>()
+
+    var messageDate: String? = ""
+    var messageName: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,16 +32,23 @@ class RecyclerViewActivity : AppCompatActivity() {
         setContentView(view)
 
         // Get the Intent that started this activity and extract the string
-        val message = intent.getStringExtra(EXTRA_MESSAGE)
-        Log.d(TAG, "Receive RecyclerViewActivity content : $message")
+        messageDate = intent.getStringExtra(EXTRA_MESSAGE_DATE)
+        messageName = intent.getStringExtra(EXTRA_MESSAGE_NAME)
+        Log.d(TAG, "Receive RecyclerViewActivity content : $messageDate , $messageName")
 
         prepareStockList()
 
+        CoroutineScope(Dispatchers.IO).launch {
+            storeData();
+        }
+
+        CoroutineScope(Dispatchers.IO).launch {
+            getLoginData()
+        }
+
         stockAdapterＣontainer = StockAdapter(mStockList)
         stockAdapterＣontainer.notifyDataSetChanged()
-
         binding.recyclerView.adapter = stockAdapterＣontainer
-
         layoutManager = LinearLayoutManager(binding.recyclerView.context)
         binding.recyclerView.layoutManager = layoutManager
     }
@@ -52,4 +65,31 @@ class RecyclerViewActivity : AppCompatActivity() {
         var stock5 = Stock("玉山金", "預計 30", "3.25", "1.36")
         mStockList.add(stock5)
     }
+
+    private suspend fun getLoginData() {
+        Log.d(TAG, "getLoginData: execute")
+        loginDataStore.data
+            .collect {
+                Log.d(TAG, "username : ${it.userName}")
+                Log.d(TAG, "logintime : ${it.loginTime}")
+                Log.d(TAG, "stocklistsize : ${it.stockListSize}")
+            }
+
+    }
+
+    private suspend fun storeData() {
+        Log.d(TAG, "storeData: execute")
+        loginDataStore.updateData { currentSettings ->
+            currentSettings.toBuilder()
+                .setLoginTime(messageDate)
+                .setUserName(messageName)
+                .setStockListSize(mStockList.size)
+                .build()
+        }
+    }
+
+    private val Context.loginDataStore: DataStore<Login> by dataStore(
+        fileName = "login_settings.pb",
+        serializer = SettingsSerializer
+    )
 }

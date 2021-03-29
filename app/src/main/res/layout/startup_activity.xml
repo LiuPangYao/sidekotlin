@@ -7,7 +7,7 @@
     tools:context=".StartupActivity">
 
     <EditText
-        android:id="@+id/et_company"
+        android:id="@+id/et_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -18,15 +18,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/et_name"
+        android:id="@+id/et_company"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="證券戶"
-        app:layout_constraintEnd_toEndOf="@+id/et_company"
-        app:layout_constraintStart_toStartOf="@+id/et_company"
-        app:layout_constraintTop_toBottomOf="@+id/et_company" />
+        app:layout_constraintEnd_toEndOf="@+id/et_name"
+        app:layout_constraintStart_toStartOf="@+id/et_name"
+        app:layout_constraintTop_toBottomOf="@+id/et_name" />
 
     <EditText
         android:id="@+id/et_age"
@@ -38,7 +38,7 @@
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="@+id/et_name"
         app:layout_constraintStart_toStartOf="@+id/et_name"
-        app:layout_constraintTop_toBottomOf="@+id/et_name"
+        app:layout_constraintTop_toBottomOf="@+id/et_company"
         tools:layout_editor_absoluteY="317dp" />
 
     <Button
