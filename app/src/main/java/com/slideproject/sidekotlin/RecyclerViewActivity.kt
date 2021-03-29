@@ -39,10 +39,7 @@ class RecyclerViewActivity : AppCompatActivity() {
         prepareStockList()
 
         CoroutineScope(Dispatchers.IO).launch {
-            storeData();
-        }
-
-        CoroutineScope(Dispatchers.IO).launch {
+            storeData()
             getLoginData()
         }
 
@@ -70,11 +67,11 @@ class RecyclerViewActivity : AppCompatActivity() {
         Log.d(TAG, "getLoginData: execute")
         loginDataStore.data
             .collect {
+                Log.d(TAG, "DataStore - Proto Data")
                 Log.d(TAG, "username : ${it.userName}")
-                Log.d(TAG, "logintime : ${it.loginTime}")
-                Log.d(TAG, "stocklistsize : ${it.stockListSize}")
+                Log.d(TAG, "loginTime : ${it.loginTime}")
+                Log.d(TAG, "stock List size : ${it.stockListSize}")
             }
-
     }
 
     private suspend fun storeData() {
