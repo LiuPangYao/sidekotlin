@@ -33,6 +33,7 @@ class StartupActivity : AppCompatActivity() {
         userManager = UserManager(dataStore)
         observeData()
         buttonSave()
+        testCsv()
     }
 
     private fun observeData() {
@@ -78,6 +79,14 @@ class StartupActivity : AppCompatActivity() {
             val intent = Intent(this, RecyclerViewActivity::class.java).apply {
                 putExtra(EXTRA_MESSAGE_DATE, currentDate)
                 putExtra(EXTRA_MESSAGE_NAME, userName)
+            }
+            startActivity(intent)
+        }
+    }
+
+    private fun testCsv() {
+        binding.btnCsvTest.setOnClickListener {
+            val intent = Intent(this, CsvActivity::class.java).apply {
             }
             startActivity(intent)
         }
