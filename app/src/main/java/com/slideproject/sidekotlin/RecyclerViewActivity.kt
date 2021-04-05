@@ -8,6 +8,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.slideproject.sidekotlin.adapter.StockAdapter
 import com.slideproject.sidekotlin.databinding.ActivityRecyclerViewBinding
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect

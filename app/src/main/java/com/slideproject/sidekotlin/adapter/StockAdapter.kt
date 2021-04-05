@@ -1,8 +1,9 @@
-package com.slideproject.sidekotlin
+package com.slideproject.sidekotlin.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.slideproject.sidekotlin.Stock
 import com.slideproject.sidekotlin.databinding.StockListItemBinding
 
 class StockAdapter(private var stockList: ArrayList<Stock>) :
