@@ -5,17 +5,25 @@ import android.os.Bundle
 import android.os.Environment
 import android.view.View
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.slideproject.sidekotlin.adapter.AssetAdapter
 import com.slideproject.sidekotlin.asset.AssetData
 import com.slideproject.sidekotlin.databinding.ActivityCsvBinding
 import java.io.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 class CsvActivity : AppCompatActivity() {
 
     private val fileDirName = "csvfile"
     private var completeExternalPath: File? = null
-    val CSV_HEADER = "rank, name, asset, company\n"
-    val assetArray = Arrays.asList(
+
+    var layoutManager: RecyclerView.LayoutManager? = null
+    private lateinit var assetAdapterＣontainer: AssetAdapter
+
+    private val CSV_HEADER = "rank, name, asset, company\n"
+    private val assetArray = Arrays.asList(
         AssetData("1", "Elon Musk", "1.28兆", "特斯拉"),
         AssetData("2", "Jeff Bezos", "1.22兆", "亞馬遜"),
         AssetData("3", "Bernard Arnault", "7380億", "酩悅·軒尼詩－路易·威登集團"),
@@ -28,6 +36,8 @@ class CsvActivity : AppCompatActivity() {
         AssetData("10", "Steve Ballmer", "5180億", "微軟")
     )
 
+    val mAssetList: ArrayList<AssetData> = ArrayList<AssetData>()
+
     private lateinit var binding: ActivityCsvBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,42 +45,40 @@ class CsvActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        for (assets in assetArray) {
+            mAssetList.add(assets)
+        }
+
+        assetAdapterＣontainer = AssetAdapter(mAssetList)
+        assetAdapterＣontainer.notifyDataSetChanged()
+        binding.recyclerViewCsv.adapter = assetAdapterＣontainer
+        layoutManager = LinearLayoutManager(binding.recyclerViewCsv.context)
+        binding.recyclerViewCsv.layoutManager = layoutManager
+
         binding.buttonSaveCsv.setOnClickListener(View.OnClickListener {
             completeExternalPath = File(getExternalFilesDir(fileDirName), "asset2021.csv")
             try {
-                val fileOutPutStream = FileOutputStream(completeExternalPath)
-                val stringBuilderWrite: StringBuilder = StringBuilder()
+                //val fileOutPutStream = FileOutputStream(completeExternalPath)
+                //val stringBuilderWrite: StringBuilder = StringBuilder()
 
-                stringBuilderWrite.append(CSV_HEADER)
+                // fileOutPutStream vs fileWriter
+                val fileWriter = FileWriter(completeExternalPath)
+
+                fileWriter.append(CSV_HEADER)
                 for (assets in assetArray) {
-                    stringBuilderWrite.append(assets.rank)
-                    stringBuilderWrite.append(',')
-                    stringBuilderWrite.append(assets.name)
-                    stringBuilderWrite.append(',')
-                    stringBuilderWrite.append(assets.asset)
-                    stringBuilderWrite.append(',')
-                    stringBuilderWrite.append(assets.company)
-                    stringBuilderWrite.append('\n')
+                    fileWriter.append(assets.rank)
+                    fileWriter.append(',')
+                    fileWriter.append(assets.name)
+                    fileWriter.append(',')
+                    fileWriter.append(assets.asset)
+                    fileWriter.append(',')
+                    fileWriter.append(assets.company)
+                    fileWriter.append('\n')
                 }
+                fileWriter.close()
 
-                fileOutPutStream.write(stringBuilderWrite.toString().toByteArray())
-
-                /*fileOutPutStream.write(
-                    ("rank, name, asset, company\n" +
-                            "1, Elon Musk, 1.28兆, 特斯拉\n" +
-                            "2, Jeff Bezos, 1.22兆, 亞馬遜\n" +
-                            "3, Bernard Arnault, 7380億, 酩悅·軒尼詩－路易·威登集團\n" +
-                            "4, Bill Gates, 7120億, 微軟 \n" +
-                            "5, Mark Zuckerberg, 6530億, Facebook\n").toByteArray()
-                )*/
-
-                /*fileOutPutStream.write(
-                   ("rank, name, asset, company\n" +
-                           "1, " + binding.editTextPersonName.text + ", "
-                           + binding.editTextPersonAsset.text + ", "
-                           + binding.editTextPersonAssetCompany.text).toByteArray()
-               )*/
-                fileOutPutStream.close()
+                //fileOutPutStream.write(stringBuilderWrite.toString().toByteArray())
+                //fileOutPutStream.close()
             } catch (e: IOException) {
                 e.printStackTrace()
             }
@@ -120,4 +128,22 @@ class CsvActivity : AppCompatActivity() {
                 return false
             }
         }
+
+    private fun saveCSV() {
+        /*fileOutPutStream.write(
+                    ("rank, name, asset, company\n" +
+                            "1, Elon Musk, 1.28兆, 特斯拉\n" +
+                            "2, Jeff Bezos, 1.22兆, 亞馬遜\n" +
+                            "3, Bernard Arnault, 7380億, 酩悅·軒尼詩－路易·威登集團\n" +
+                            "4, Bill Gates, 7120億, 微軟 \n" +
+                            "5, Mark Zuckerberg, 6530億, Facebook\n").toByteArray()
+                )*/
+
+        /*fileOutPutStream.write(
+           ("rank, name, asset, company\n" +
+                   "1, " + binding.editTextPersonName.text + ", "
+                   + binding.editTextPersonAsset.text + ", "
+                   + binding.editTextPersonAssetCompany.text).toByteArray()
+       )*/
+    }
 }
