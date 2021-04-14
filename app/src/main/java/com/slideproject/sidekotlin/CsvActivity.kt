@@ -88,7 +88,7 @@ class CsvActivity : AppCompatActivity() {
         setContentView(view)
 
         binding.alertButton.setOnClickListener(View.OnClickListener {
-            showListAlertDialog()
+            showCustomViewAlertDialog()
         })
 
         for (assets in assetArray) {

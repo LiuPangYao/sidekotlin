@@ -34,6 +34,12 @@ class StartupActivity : AppCompatActivity() {
         observeData()
         buttonSave()
         testCsv()
+
+        binding.buttonShare.setOnClickListener {
+            val intent = Intent(this, ShareActivity::class.java).apply {
+            }
+            startActivity(intent)
+        }
     }
 
     private fun observeData() {
