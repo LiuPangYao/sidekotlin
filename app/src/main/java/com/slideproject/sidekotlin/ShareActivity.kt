@@ -20,7 +20,7 @@ class ShareActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        completeExternalPath = File(this.filesDir, "share.txt")
+        completeExternalPath = File(this.cacheDir, "share.txt")
 
         try {
             val fileWriter = FileWriter(completeExternalPath)
@@ -33,7 +33,7 @@ class ShareActivity : AppCompatActivity() {
         binding.imageViewShare.setOnClickListener(View.OnClickListener {
             val path: Uri = FileProvider.getUriForFile(
                 this.applicationContext,
-                "com.slideproject.sidekotlin.fileprovider",
+                "${this.packageName}.fileprovider",
                 completeExternalPath!!
             )
 
