@@ -1,8 +1,14 @@
 package com.slideproject.sidekotlin
 
+import android.R
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.observe
 import com.slideproject.sidekotlin.data.UserManager
@@ -12,6 +18,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 const val EXTRA_MESSAGE_DATE = "com.sideproject.sidekotlin.MESSAGE.DATE"
 const val EXTRA_MESSAGE_NAME = "com.sideproject.sidekotlin.MESSAGE,NAME"
@@ -23,6 +30,7 @@ class StartupActivity : AppCompatActivity() {
     var userAge = 0
     var userName = ""
     var userCompany = ""
+    var CHANNEL_ID = "NOTIFICATION"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +47,32 @@ class StartupActivity : AppCompatActivity() {
             val intent = Intent(this, ShareActivity::class.java).apply {
             }
             startActivity(intent)
+        }
+
+        // notification
+        binding.buttonNotification.setOnClickListener{
+            val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+
+            val builder: Notification.Builder = Notification.Builder(this)
+                .setSmallIcon(R.drawable.ic_menu_help)
+                .setColor(ContextCompat.getColor(this, R.color.holo_red_dark))
+                .setContentTitle("Test Title")
+                .setContentText("This is a test of text")
+
+            val channel: NotificationChannel
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                channel = NotificationChannel(
+                    "TEST_NOTIFY_ID", "Notify Test", NotificationManager.IMPORTANCE_HIGH
+                )
+                builder.setChannelId("TEST_NOTIFY_ID")
+                manager.createNotificationChannel(channel)
+            } else {
+                builder.setDefaults(Notification.DEFAULT_ALL)
+                    .setVisibility(Notification.VISIBILITY_PUBLIC)
+            }
+
+            manager.notify(0, builder.build())
         }
     }
 
